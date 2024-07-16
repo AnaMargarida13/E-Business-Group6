@@ -8,6 +8,11 @@ library(GGally)
 #data <- read.csv("customer_purchase_data.csv", stringsAsFactors = TRUE)
 data <- read.csv("customer_purchase_data.csv")
 
+# Structure of the data
+str(data)
+# Statistical summary of the data:
+summary(data)
+
 # Convert categorical variables to factors
 data$Gender <- factor(data$Gender, levels = c(0, 1), labels = c("Male", "Female"))
 data$ProductCategory <- factor(data$ProductCategory, levels = 0:4, labels = c("Electronics", "Clothing", "Home Goods", "Beauty", "Sports"))
