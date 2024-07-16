@@ -108,10 +108,10 @@ print("Random Forest Confusion Matrix:")
 print(rf_conf_matrix)
 
 # Print the models
-print(knn_model)
-print(tree_model)
-print(log_reg_model)
-print(rf_model)
+#print(knn_model)
+#print(tree_model)
+#print(log_reg_model)
+#print(rf_model)
 
 # Prepare data for ROC curve
 knn_pred <- prediction(knn_probs[,2], data_test$PurchaseStatus)
