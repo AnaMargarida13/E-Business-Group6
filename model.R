@@ -80,6 +80,9 @@ knn_conf_matrix <- confusionMatrix(knn_predictions, y_test)
 print("KNN Confusion Matrix:")
 print(knn_conf_matrix)
 
+#summary(knn_model)
+
+
 # Train and evaluate Decision Tree
 set.seed(123)
 tree_model <- train(PurchaseStatus ~ ., data = data_train, method = "rpart", trControl = trainControl(method = "cv", number = 10))
@@ -88,6 +91,8 @@ tree_predictions <- predict(tree_model, newdata = data_test)
 tree_conf_matrix <- confusionMatrix(tree_predictions, y_test)
 print("Decision Tree Confusion Matrix:")
 print(tree_conf_matrix)
+
+summary(tree_model)
 
 # Train and evaluate Logistic Regression
 set.seed(123)
@@ -98,6 +103,8 @@ log_reg_conf_matrix <- confusionMatrix(log_reg_predictions, y_test)
 print("Logistic Regression Confusion Matrix:")
 print(log_reg_conf_matrix)
 
+summary(log_reg_model)
+
 ##Train and Evaluate random forest
 set.seed(123)
 rf_model <- train(PurchaseStatus ~ ., data = data_train, method = "rf", trControl = trainControl(method = "cv", number = 10))
@@ -106,6 +113,8 @@ rf_predictions <- predict(rf_model, newdata = data_test)
 rf_conf_matrix <- confusionMatrix(rf_predictions, data_test$PurchaseStatus)
 print("Random Forest Confusion Matrix:")
 print(rf_conf_matrix)
+
+summary(rf_model)
 
 # Print the models
 #print(knn_model)
