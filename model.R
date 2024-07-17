@@ -5,6 +5,7 @@ library(GGally)
 library(caret)
 library(caTools)
 library(ROCR)
+library(car)
 
 # Read the dataset
 data <- read.csv("customer_purchase_data.csv", stringsAsFactors = TRUE)
@@ -71,6 +72,18 @@ y_train <- data_train$PurchaseStatus
 x_test <- data_test[, -ncol(data_test)]
 y_test <- data_test$PurchaseStatus
 
+
+# Train and evaluate Logistic Regression
+set.seed(123)
+log_reg_model <- train(PurchaseStatus ~ ., data = data_train, method = "glm", family = binomial, trControl = trainControl(method = "cv", number = 10))
+log_reg_probs <- predict(log_reg_model, newdata = data_test, type = "prob")
+log_reg_predictions <- predict(log_reg_model, newdata = data_test)
+log_reg_conf_matrix <- confusionMatrix(log_reg_predictions, y_test)
+print("Logistic Regression Confusion Matrix:")
+print(log_reg_conf_matrix)
+
+summary(log_reg_model)
+
 # Train and evaluate KNN
 set.seed(123)
 knn_model <- train(PurchaseStatus ~ ., data = data_train, method = "knn", trControl = trainControl(method = "cv", number = 10))
@@ -93,17 +106,6 @@ print("Decision Tree Confusion Matrix:")
 print(tree_conf_matrix)
 
 summary(tree_model)
-
-# Train and evaluate Logistic Regression
-set.seed(123)
-log_reg_model <- train(PurchaseStatus ~ ., data = data_train, method = "glm", family = binomial, trControl = trainControl(method = "cv", number = 10))
-log_reg_probs <- predict(log_reg_model, newdata = data_test, type = "prob")
-log_reg_predictions <- predict(log_reg_model, newdata = data_test)
-log_reg_conf_matrix <- confusionMatrix(log_reg_predictions, y_test)
-print("Logistic Regression Confusion Matrix:")
-print(log_reg_conf_matrix)
-
-summary(log_reg_model)
 
 ##Train and Evaluate random forest
 set.seed(123)
